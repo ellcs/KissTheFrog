@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">KissTheFrog</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="success">You found the frog!</string>
     <string name="action_settings">Settings</string>
 
 </resources>
