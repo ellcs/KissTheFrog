@@ -1,5 +1,5 @@
 # Hardware Device on Linux
-When you have an android device you may want to use this device for testing. Do the following steps to use your hardware device same as an virtual.
+When you have an android device you may want to use this device for testing or simply install you app. 
 
 1) Enable developermode on your device.
 
@@ -33,4 +33,4 @@ SUBSYSTEM=="usb", ATTR{id.Vendor}=="0bb4", MODE="0666", OWNER="user", GROUP="gro
 
 5) To show connected devices change directory to `android-sdk/platform-tools` and type `./adb device`. When you still have a `NO PERMISSION`Error, restart adb by typing `./adb kill-server && ./adb start-server`.
 
-6) You can install apps via. `Run As`, `Android Application`. all you need to do is to select your hardware device.
+6) You can install apps via. `Run As`, `Android Application`. all you need to do is to select your hardware device. 
