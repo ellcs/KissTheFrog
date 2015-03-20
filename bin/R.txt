@@ -347,7 +347,10 @@ int drawable abc_textfield_search_material 0x7f020036
 int drawable ic_launcher 0x7f020037
 int drawable part1 0x7f020038
 int drawable part2 0x7f020039
-int drawable real_frog 0x7f02003a
+int drawable part3 0x7f02003a
+int drawable part4 0x7f02003b
+int drawable part5 0x7f02003c
+int drawable real_frog 0x7f02003d
 int id action_bar 0x7f090031
 int id action_bar_activity_content 0x7f090003
 int id action_bar_container 0x7f090030

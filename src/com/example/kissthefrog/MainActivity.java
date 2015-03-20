@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     	container.addView(wv,
     			ViewGroup.LayoutParams.MATCH_PARENT,
     			ViewGroup.LayoutParams.MATCH_PARENT);
-    	wv.setImageCount(_round);
+    	wv.setImageCount(_round * 10);
     	_frog = new ImageView(this);
     	_frog.setId(_frog_id);
     	_frog.setImageResource(R.drawable.real_frog);
