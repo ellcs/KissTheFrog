@@ -4,6 +4,7 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -21,8 +22,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private 	int 		_score;
     private 	int 		_round;
     private 	int 		_countdown;
+    private		Handler		_handler = new Handler();
     private		Random 		_rnd 		= new Random((int) System.currentTimeMillis());		
     private 	int 		_frog_id 	= 13371337;
+
+    private 	Runnable 	_countdown_run = new Runnable() {		
+		@Override
+		public void run() {
+			countdown();
+			
+		}
+	};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     	container.addView(wv,
     			ViewGroup.LayoutParams.MATCH_PARENT,
     			ViewGroup.LayoutParams.MATCH_PARENT);
-    	wv.setImageCount(_round * 10);
+    	wv.setImageCount((_round + 1)* 10);
     	_frog = new ImageView(this);
     	_frog.setId(_frog_id);
     	_frog.setImageResource(R.drawable.real_frog);
@@ -66,6 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     	Log.d(TAG, "Frog height: " + _frog.getHeight());
     	Log.d(TAG, "Frog position x: " + container.findViewById(_frog_id).getWidth());
     	Log.d(TAG, "Frog position y: " + container.findViewById(_frog_id).getHeight());
+    	_handler.postDelayed(_countdown_run, 1000 - _round * 50);
     	update();
     }
 
@@ -82,7 +93,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Log.v(TAG, "update stats");
         fillTextView(R.id.score, Integer.toString(_score));
         fillTextView(R.id.round, Integer.toString(_round));
-        fillTextView(R.id.countdown, Integer.toString(_countdown * 1000));
+        fillTextView(R.id.countdown, Integer.toString(_countdown));
     }
 
     private void showStartFragment() {
@@ -95,7 +106,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void showGameOverFragment() {
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.fragment_gameover, null));
-        container.findViewById(R.id.play_again_button);
+        container.findViewById(R.id.play_again_button).setOnClickListener(this);
     }
 
     @Override
@@ -105,13 +116,29 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startGame();
         } else if (v.getId() == R.id.play_again_button) {
             Log.v(TAG, "show start clicked");
-            showStartFragment();
+            startGame();
         } else if (v.getId() == _frog_id) {
+        	_handler.removeCallbacks(_countdown_run);
         	Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show();
+        	_round++;
+        	_score += _countdown;
+        	initRound();
         }
     }
 
     private void startGame() {
         newGame();
     }
+    
+    private void countdown() {
+    	_countdown--;
+    	update();
+    	if (_countdown <= 0) {
+    		_frog.setOnClickListener(null);
+    		showGameOverFragment();
+    	} else {
+    		_handler.postDelayed(_countdown_run, 1000 - _round * 50);
+    	}
+    }
+    
 }
